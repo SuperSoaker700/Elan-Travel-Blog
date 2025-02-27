@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Elan | Elan's Travel Blog</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .about-container {
+            display: flex;
+            align-items: flex-start;
+        }
+        .about-text {
+            flex: 1;
+        }
+        .about-container img {
+            width: 150px;
+            height: auto;
+            border-radius: 10px;
+            margin-left: 15px;
+        }
+        .latest-post {
+            margin-top: 30px;
+            padding: 15px;
+            border-top: 2px solid #ddd;
+        }
+        .latest-post h2 {
+            margin-bottom: 10px;
+        }
+        /* Add styles for the post container */
+        .post-container {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+        .post-container h3 {
+            font-size: 22px;
+            color: #333;
+        }
+        .post-container p {
+            font-size: 16px;
+            color: #555;
+        }
+        .post-container img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        /* New styles for the Welcome section */
+        .welcome-container {
+            background-color: #f0f0f0;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        /* Styles for the Recent Photos section */
+        .recent-photos {
+            margin-top: 30px;
+            padding: 15px;
+            border-top: 2px solid #ddd;
+        }
+        .recent-photos h2 {
+            margin-bottom: 10px;
+        }
+        .photo-container {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        .photo-container img {
+            width: 30%;
+            border-radius: 10px;
+            cursor: pointer; /* Make the images clickable */
+        }
+			.photo-container img {
+			width: 30%;
+			border-radius: 10px;
+			cursor: pointer;
+			transition: transform 0.3s ease-in-out; /* Smooth transition */
+		}
+
+.photo-container img:hover {
+    transform: scale(1.05); /* Slightly enlarges the image on hover */
+}
+
+
+        /* Styles for the Modal */
+        /* The Modal (background) */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1001;
+            padding-top: 50px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+        }
+
+        .modal img {
+            display: block;
+            max-width: 90%;
+            max-height: 80%;
+            margin: auto;
+			z-index: 1001;
+        }
+
+        .close {
+            position: absolute;
+            top: 20px;
+            right: 35px;
+            font-size: 40px;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+			z-index: 1001;
+        }
+
+
+.prev, .next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 40px;
+    color: white;
+    cursor: pointer;
+    padding: 10px;
+    user-select: none;
+    background: none; /* Ensure background is removed */
+    border: none; /* Ensure no border */
+    outline: none; /* Remove the outline */
+	z-index: 1001;
+}
+
+.prev {
+    left: 10px; /* Position the previous button on the left */
+}
+
+.next {
+    right: 10px; /* Position the next button on the right */
+}
+
+.prev:hover, .next:hover {
+    color: #ffcc00;
+}
+
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Elan's Travel Blog</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html" class="active">Home</a></li>
+                    <li><a href="blog.html">My Journey</a></li>
+                    <li><a href="destinations.html">Destinations</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Welcome Title Section in its own container -->
+        <div class="welcome-container">
+            <h1>Welcome to My Travel Blog</h1>
+        </div>
+        
+        <!-- Main content container -->
+        <div class="container">
+            <article>
+                <h1>About Me</h1>
+                <div class="about-container">
+                    <p class="about-text">Hey! I'm Elan, a passionate traveler and writer. My blog is dedicated to documenting my journeys and experiences. I started this blog to share my adventures and inspire others by sharing the positive aspects of the world. Stay tuned!</p>
+                    <img src="myprofile.jpg" alt="Elan's Profile Picture">
+					 </div>
+				<p><strong>Where I Am Now: United States</strong></p>
+
+            </article>
+
+            <div class="latest-post">
+                <h2>Most Recent Post</h2>
+                <div id="recent-post">
+                    <p>Loading latest post...</p>
+                </div>
+            </div>
+
+            <!-- Recent Photos Section -->
+            <div class="recent-photos">
+                <h2>Recent Photos</h2>
+                <div id="recent-photos-container">
+                    <p>Loading recent photos...</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container"></div>
+    </footer>
+
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="modal-img">
+        <button class="prev" id="prev-btn">&#10094;</button>
+        <button class="next" id="next-btn">&#10095;</button>
+    </div>
+
+<script>
+    let photosArray = [];
+    let currentPhotoIndex = 0;
+
+    // Fetch the blog posts from the posts.json file
+    fetch('posts.json')
+        .then(response => response.json())
+        .then(posts => {
+            // Sort posts by date, so the most recent post is first
+            posts.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            // Get the most recent post (now guaranteed to be the first one)
+            const latestPost = posts[0];
+
+            // Create the post container and inject the content
+            const postContainer = document.createElement('div');
+            postContainer.classList.add('post-container');
+            
+            postContainer.innerHTML = `
+                <h3>${latestPost.title}</h3>
+                <p><em>Published on ${latestPost.date}</em></p>
+                <p>${latestPost.content}</p>
+                ${latestPost.image ? `<img src="${latestPost.image}" alt="${latestPost.title}">` : ''}
+                <a href="blog.html">Read More</a>
+            `;
+            
+            // Clear previous content and add the new post
+            const recentPostContainer = document.getElementById("recent-post");
+            recentPostContainer.innerHTML = ''; // Clear any previous content
+            recentPostContainer.appendChild(postContainer);
+        })
+        .catch(error => {
+            console.error("Error fetching the latest post:", error);
+            document.getElementById("recent-post").innerHTML = `<p>Sorry, there was an error loading the latest post.</p>`;
+        });
+
+    // Fetch recent photos from the recentphotos.json file
+    fetch('recentphotos.json')
+        .then(response => response.json())
+        .then(photos => {
+            photosArray = photos; // Store the photos in a global variable
+            const photosContainer = document.getElementById('recent-photos-container');
+            photosContainer.innerHTML = ''; // Clear loading text
+
+            // Create a flex container for images
+            const photoContainer = document.createElement('div');
+            photoContainer.classList.add('photo-container');
+
+            photos.forEach((photo, index) => {
+                const img = document.createElement('img');
+                img.src = photo.url;
+                img.alt = photo.description;
+                img.onclick = () => openModal(index); // Open modal with the photo index
+                photoContainer.appendChild(img);
+            });
+
+            // Append the photo container to the recent-photos section
+            photosContainer.appendChild(photoContainer);
+        })
+        .catch(error => {
+            console.error("Error fetching recent photos:", error);
+            document.getElementById("recent-photos-container").innerHTML = `<p>Sorry, there was an error loading the recent photos.</p>`;
+        });
+
+    // Get the modal
+    const modal = document.getElementById("myModal");
+    const modalImg = document.getElementById("modal-img");
+    const prevBtn = document.getElementById("prev-btn");
+    const nextBtn = document.getElementById("next-btn");
+
+    // Function to open the modal with the clicked image
+    function openModal(index) {
+        currentPhotoIndex = index; // Set the current index
+        modal.style.display = "block";
+        modalImg.src = photosArray[currentPhotoIndex].url; // Show the image
+    }
+
+    // Function to close the modal
+    const closeBtn = document.getElementsByClassName("close")[0];
+    closeBtn.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    // Function to cycle to the next photo
+    nextBtn.onclick = function() {
+        currentPhotoIndex = (currentPhotoIndex + 1) % photosArray.length; // Loop to the first image if at the last one
+        modalImg.src = photosArray[currentPhotoIndex].url;
+    }
+
+    // Function to cycle to the previous photo
+    prevBtn.onclick = function() {
+        currentPhotoIndex = (currentPhotoIndex - 1 + photosArray.length) % photosArray.length; // Loop to the last image if at the first one
+        modalImg.src = photosArray[currentPhotoIndex].url;
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>
+<!-- Scroll to top button -->
+<button onclick="scrollToTop()" id="toTopBtn" title="Go to top">⬆ Top</button>
+<script>
+    // Function to display or hide the "toTopBtn" based on scroll position
+    window.onscroll = function() {
+        toggleButton();
+    };
+
+    function toggleButton() {
+        var button = document.getElementById("toTopBtn");
+        // Show button after 300px scroll down
+        if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+            button.style.display = "block";
+        } else {
+            button.style.display = "none";
+        }
+    }
+
+    // Function to scroll the page to the top
+    function scrollToTop() {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+</script>
+
+
+</body>
+</html>
