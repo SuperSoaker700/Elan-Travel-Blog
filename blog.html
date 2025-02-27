@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elan's Travel Blog</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Include external CSS -->
+   
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Elan's Travel Blog</h1>
+            <nav>
+                <ul>
+                    <li><a href="about.html">Home</a></li>
+                    <li><a href="blog.html" class="active">My Journey</a></li>
+                    <li><a href="destinations.html">Destinations</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <h1>My Story</h1>
+        <div class="container" id="blog-posts-container">
+            <!-- Blog posts will be loaded here via JavaScript -->
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+        </div>
+    </footer>
+
+    <!-- Scroll to top button -->
+    <button onclick="scrollToTop()" id="toTopBtn" title="Go to top">⬆ Top</button>
+
+    <!-- Inline JavaScript for Scroll to Top Button -->
+    <script>
+        // Function to display or hide the "toTopBtn" based on scroll position
+        window.onscroll = function() {
+            toggleButton();
+        };
+
+        function toggleButton() {
+            var button = document.getElementById("toTopBtn");
+            // Show button after 300px scroll down
+            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                button.style.display = "block";
+            } else {
+                button.style.display = "none";
+            }
+        }
+
+        // Function to scroll the page to the top
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+
+        // Fetch blog posts from a JSON file and display them
+        fetch('posts.json')
+            .then(response => response.json())
+            .then(posts => {
+                const postsContainer = document.getElementById('blog-posts-container');
+                
+                // Loop through each post and create HTML elements
+                posts.forEach(post => {
+                    const postElement = document.createElement('div');
+                    postElement.classList.add('blog-post');
+                    
+                    // Create the post title
+                    const title = document.createElement('h2');
+                    title.textContent = post.title;
+                    postElement.appendChild(title);
+                    
+                    // Create the publication date
+                    const date = document.createElement('p');
+                    date.innerHTML = `<em>Published on ${post.date}</em>`;
+                    postElement.appendChild(date);
+                    
+                    // Create the post content
+                    const content = document.createElement('p');
+                    content.textContent = post.content;
+                    postElement.appendChild(content);
+                    
+                    // Add an image if available
+                    if (post.image) {
+                        const imageContainer = document.createElement('div');
+                        imageContainer.classList.add('new-zealand-image');
+                        const image = document.createElement('img');
+                        image.src = post.image;
+                        image.alt = post.title;
+                        image.style.width = '100%';
+                        image.style.height = 'auto';
+                        image.style.borderRadius = '10px';
+                        image.style.marginTop = '20px';
+                        imageContainer.appendChild(image);
+                        postElement.appendChild(imageContainer);
+                    }
+
+                    // Append the post element to the container
+                    postsContainer.appendChild(postElement);
+                });
+            })
+            .catch(error => {
+                console.error('Error loading blog posts:', error);
+            });
+    </script>
+</body>
+</html>
