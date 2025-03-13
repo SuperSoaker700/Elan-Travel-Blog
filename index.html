@@ -6,10 +6,10 @@
     <title>About Elan | Elan's Travel Blog</title>
     <link rel="stylesheet" href="styles.css">
     <style>
-        .about-container {
-            display: flex;
-            align-items: flex-start;
-        }
+		.about-container {
+			display: flex;
+			align-items: flex-start;
+		}
         .about-text {
             flex: 1;
         }
@@ -174,19 +174,69 @@
         <!-- Main content container -->
         <div class="container">
             <article>
-                <h1>About Me</h1>
+				<h1 class="about-header">About Me</h1>
                 <div class="about-container">
-                    <p class="about-text">Hey! I'm Elan, a passionate traveler and writer. My blog is dedicated to documenting my journeys and experiences. I started this blog to share my adventures and inspire others by sharing the positive aspects of the world. Stay tuned!</p>
+                    <p class="about-text">Hey! I'm Elan, a passionate traveler and writer. My blog is dedicated to documenting my journeys and experiences. I started this blog to share my adventures and inspire others by sharing the positive aspects of the world. Stay tuned!<br><br> Contact: e-schwartz5@hvcc.edu (555)555-5555 </p>
+					
                     <img src="myprofile.jpg" alt="Elan's Profile Picture">
-					 </div>
-				<p><strong>Where I Am Now: United States</strong></p>
+					
 
+				</div>
+					
+				<!-- Map Section -->
+				<p><strong>Where I Am Now: United States</strong></p>
+					<div id="map"></div>
+
+
+				<!-- Leaflet.js Map Library -->
+				<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+				<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+				<style>
+					
+
+					#map {
+						height: 250px;
+						width: 450px;
+						border-radius: 10px;
+						flex-shrink: 0; /* Prevents resizing */
+					}
+
+					@media (max-width: 768px) {
+						.about-container {
+							flex-direction: column; /* Stack elements on small screens */
+							align-items: flex-start;
+						}
+
+						#map {
+							width: 100%; /* Full width on small screens */
+							height: 250px;
+						}
+					}
+				</style>
+
+				<script>
+					document.addEventListener("DOMContentLoaded", function () {
+						// Initialize map centered on Saratoga Springs, NY
+						var map = L.map('map').setView([43.0831, -73.7846], 13);
+
+						// Add OpenStreetMap tiles
+						L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+							attribution: '© OpenStreetMap contributors'
+						}).addTo(map);
+
+						// Add marker for Saratoga Springs, NY
+						L.marker([43.0831, -73.7846]).addTo(map)
+							.bindPopup("<b>Saratoga Springs, NY</b><br>My current location.")
+							.openPopup();
+					});
+				</script>
             </article>
 
             <div class="latest-post">
-                <h2>Most Recent Post</h2>
+                <h2>Highlighted Post</h2>
                 <div id="recent-post">
-                    <p>Loading latest post...</p>
+                    <p>Loading highlighted post...</p>
                 </div>
             </div>
 
