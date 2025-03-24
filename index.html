@@ -178,7 +178,7 @@
             <button class="search-button">🔍</button>
         </div>
 		
-		<style>
+	<style>
     .search-container {
         display: flex;
         align-items: center;
@@ -207,7 +207,60 @@
     .search-button:hover {
         background: #0056b3;
     }
-</style>
+	
+	/* Message Form */
+
+	.message-form-container {
+		background: #f9f9f9;
+		padding: 20px;
+		border-radius: 10px;
+		box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+		margin-top: 20px;
+	}
+
+	.message-form-container h2 {
+		font-family: 'Merriweather', serif;
+		color: #002147;
+		margin-bottom: 10px;
+	}
+
+	.message-form-container label {
+		display: block;
+		margin-top: 10px;
+		font-weight: bold;
+		color: #003366;
+	}
+
+	.message-form-container input,
+	.message-form-container textarea {
+		width: 100%;
+		resize: vertical;
+		max-height: 400px;
+		padding: 10px;
+		margin-top: 5px;
+		border: 1px solid #ddd;
+		border-radius: 5px;
+		font-size: 1rem;
+	}
+
+	.message-form-container button {
+		background: #003366;
+		color: #ffcc00;
+		border: none;
+		padding: 10px 15px;
+		font-size: 1.1rem;
+		border-radius: 5px;
+		cursor: pointer;
+		margin-top: 10px;
+		transition: background 0.3s, color 0.3s;
+	}
+
+	.message-form-container button:hover {
+		background: #ffcc00;
+		color: #003366;
+	}
+
+	</style>
 		
         <!-- Main content container -->
         <div class="container">
@@ -220,7 +273,7 @@
 					
 
 				</div>
-					
+
 				<!-- Map Section -->
 				<p><strong>Where I Am Now: United States</strong></p>
 					<div id="map"></div>
@@ -229,6 +282,23 @@
 				<!-- Leaflet.js Map Library -->
 				<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 				<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+				<!-- Message Me -->
+				<div class="message-form-container">
+					<h2>Message Me Directly</h2>
+					<form action="blank-for-now" method="POST">
+						<label for="name">Your Name</label>
+						<input type="text" id="name" name="name" placeholder="Enter your name" required>
+
+						<label for="email">Your Email</label>
+						<input type="email" id="email" name="email" placeholder="Enter your email" required>
+
+						<label for="message">Your Message</label>
+						<textarea id="message" name="message" placeholder="Type your message here..." required></textarea>
+
+						<button type="submit">Send Message</button>
+					</form>
+				</div>
 
 				<style>
 					
