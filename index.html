@@ -174,9 +174,9 @@
         
 		<!-- Search Bar -->
 	 <div class="search-container">
-            <input type="text" class="search-input" placeholder="Search this site...">
-            <button class="search-button">🔍</button>
-        </div>
+    <input type="text" class="search-input" id="searchInput" placeholder="Search this site...">
+    <button class="search-button" onclick="processSearch()">🔍</button>
+</div>
 		
 	<style>
     .search-container {
@@ -235,7 +235,8 @@
 	.message-form-container textarea {
 		width: 100%;
 		resize: vertical;
-		max-height: 400px;
+		max-height: 200px;
+		height: 50%;
 		padding: 10px;
 		margin-top: 5px;
 		border: 1px solid #ddd;
@@ -496,6 +497,22 @@
     }
 </script>
 
+<script>
+  function processSearch() {
+    const input = document.getElementById('searchInput').value;
 
+    // Split by spaces or commas
+    let terms = input.split(/[\s,]+/);
+
+    // Remove empty strings and duplicates
+    terms = [...new Set(terms.filter(term => term.trim() !== ''))];
+
+    if (terms.length === 0) {
+      alert("No valid search terms entered.");
+    } else {
+      alert("Search terms processed:\n\n" + terms.join('\n'));
+    }
+  }
+</script>
 </body>
 </html>
