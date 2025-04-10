@@ -160,6 +160,7 @@
                     <li><a href="index.html" class="active">Home</a></li>
                     <li><a href="blog.html">My Journey</a></li>
                     <li><a href="destinations.html">Destinations</a></li>
+					<li><a href="gallery.html">Photo Gallery</a></li>
                 </ul>
             </nav>
         </div>
@@ -498,21 +499,27 @@
 </script>
 
 <script>
-  function processSearch() {
+function processSearch() {
     const input = document.getElementById('searchInput').value;
 
-    // Split by spaces or commas
-    let terms = input.split(/[\s,]+/);
+    // Common stop words to ignore
+    const stopWords = new Set(["the", "is", "and", "are", "in", "to", "of", "a", "an", "on", "for", "with", "at", "by"]);
 
-    // Remove empty strings and duplicates
-    terms = [...new Set(terms.filter(term => term.trim() !== ''))];
+    // Split input by spaces, commas, or both
+    let terms = input.split(/[^a-zA-Z0-9]+/);
+    // Remove empty, duplicates, and stop words
+    terms = [...new Set(terms.filter(term => {
+        const cleaned = term.trim().toLowerCase();
+        return cleaned !== '' && !stopWords.has(cleaned);
+    }))];
 
     if (terms.length === 0) {
-      alert("No valid search terms entered.");
+        alert("No valid search terms entered.");
     } else {
-      alert("Search terms processed:\n\n" + terms.join('\n'));
+        alert("Search terms processed:\n\n" + terms.join('\n'));
     }
-  }
+}
+
 </script>
 </body>
 </html>
