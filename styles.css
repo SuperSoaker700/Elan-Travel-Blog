@@ -181,16 +181,17 @@ main {
     /* Remove background and shrink main content container */
 	body.home-page main {
     padding: 20px !important;
-	background-color: rgba(255, 255, 255, 0.6);
-	
-	.welcome-container {
+    background-color: rgba(255, 255, 255, 0.6);
+}
+
+.welcome-container {
     background-color: transparent;
     padding: 20px;
     text-align: center;
     margin-bottom: 30px;
     box-shadow: none;
 }
-	}
+
 	
     body:not(.home-page) main .container {
         background: transparent !important;
