@@ -122,7 +122,7 @@
 
     </style>
 </head>
-<body>
+<body class="destinations-page">
     <header>
         <h1>Elan's Travel Blog</h1>
         <nav>
@@ -265,21 +265,6 @@
     }
 </script>
 
-
-window.onscroll = function() { toggleButton() };
-
-function toggleButton() {
-    var button = document.getElementById("toTopBtn");
-    if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
-        button.style.display = "block";
-    } else {
-        button.style.display = "none";
-    }
-}
-
-function scrollToTop() {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-}
 
     </script>
 
