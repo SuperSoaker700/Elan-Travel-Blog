@@ -131,16 +131,62 @@
                     <li><a href="blog.html">My Journey </a></li>
                 <li><a href="destinations.html" class="active">Destinations</a></li>
 				<li><a href="gallery.html">Photo Gallery</a></li>
+				<li><a href="traveltips.html">Travel Tips</a></li>
             </ul>
         </nav>
     </header>
 
     <main>
         <div class="container">
-            <h1>Destinations</h1>
+            <h1>My Destinations</h1>
+				<br>
+				<!-- Map Section -->
+				<h2>Where I am now:</h2>
+					<div id="map"></div>
+				<!-- Leaflet.js Map Library -->
+				<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+				<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+								<style>
+					
 
-            <div class="destination">
+					#map {
+						height: 250px;
+						width: 450px;
+						border-radius: 10px;
+						flex-shrink: 0; /* Prevents resizing */
+					}
+
+					@media (max-width: 768px) {
+						.about-container {
+							flex-direction: column; /* Stack elements on small screens */
+							align-items: flex-start;
+						}
+
+						#map {
+							width: 100%; /* Full width on small screens */
+							height: 250px;
+						}
+					}
+				</style>
+				<script>
+					document.addEventListener("DOMContentLoaded", function () {
+						// Initialize map centered on Saratoga Springs, NY
+						var map = L.map('map').setView([43.0831, -73.7846], 13);
+
+						// Add OpenStreetMap tiles
+						L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+							attribution: '© OpenStreetMap contributors'
+						}).addTo(map);
+
+						// Add marker for Saratoga Springs, NY
+						L.marker([43.0831, -73.7846]).addTo(map)
+							.bindPopup("<b>Saratoga Springs, NY</b><br>My current location.")
+							.openPopup();
+					});
+				</script>
+				<br>
                <table class="destination-table">
+			   <h2>Where I've been:</h2>
                     <tr>
                         <th>Title</th>
                         <th>Image</th>
@@ -210,7 +256,6 @@
                     </tr>
                 </table>
 
-        </div>
     </main>
 
    <div id="imageModal" class="modal">
