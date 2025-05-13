@@ -154,50 +154,5 @@ main {
     color: #555;
 }
 
-/* Destinations Table */
-.destination-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    background-color: #ffffff;
-    border-radius: 10px;
-    overflow: hidden;
-}
-
-.destination-table th, 
-.destination-table td {
-    padding: 15px;
-    text-align: left;
-    vertical-align: top;
-    border-bottom: 1px solid #ddd;
-    font-family: 'Merriweather', serif;
-    color: #333;
-}
-
-.destination-table th {
-    background-color: #003366;
-    color: #ffffff;
-    font-size: 1.1rem;
-    font-weight: 700;
-    text-align: center;
-}
-
-.destination-table td {
-    font-size: 0.95rem;
-}
-
-
-.destination-table a {
-    color: #003366;
-    text-decoration: none;
-    font-weight: bold;
-    transition: color 0.3s;
-}
-
-.destination-table a:hover {
-    color: #ffcc00;
-}
-
 footer {
 }
